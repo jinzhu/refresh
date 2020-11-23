@@ -20,12 +20,12 @@ func (m *Manager) runner() {
 			cmd.Process.Kill()
 		}
 		if m.Debug {
-			bp := m.FullBuildPath()
+			bp := m.FullExecPath()
 			args := []string{"exec", bp}
 			args = append(args, m.CommandFlags...)
 			cmd = exec.Command("dlv", args...)
 		} else {
-			cmd = exec.Command(m.FullBuildPath(), m.CommandFlags...)
+			cmd = exec.Command(m.FullExecPath(), m.CommandFlags...)
 		}
 		go func() {
 			err := m.runAndListen(cmd)

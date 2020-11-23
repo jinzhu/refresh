@@ -20,6 +20,7 @@ type Configuration struct {
 	BuildDelay         time.Duration `yaml:"build_delay"`
 	BuildFlags         []string      `yaml:"build_flags"`
 	BuildPath          string        `yaml:"build_path"`
+	ExecPath           string        `yaml:"exec_path"`
 	BuildTargetPath    string        `yaml:"build_target_path"`
 	CommandEnv         []string      `yaml:"command_env"`
 	CommandFlags       []string      `yaml:"command_flags"`
@@ -33,6 +34,13 @@ type Configuration struct {
 	Stderr             io.Writer     `yaml:"-"`
 	Stdin              io.Reader     `yaml:"-"`
 	Stdout             io.Writer     `yaml:"-"`
+}
+
+func (c *Configuration) FullExecPath() string {
+	if c.ExecPath != "" {
+		return c.ExecPath
+	}
+	return c.FullBuildPath()
 }
 
 func (c *Configuration) FullBuildPath() string {
